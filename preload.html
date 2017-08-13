@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>图片预加载（有序）</title>
+    <style>
+        .box{
+            text-align: center;
+        }
+        .btn{
+            display: inline-block;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid #31b0d5;
+            background: #ffffff;
+            padding: 0 10px;
+            margin-right: 50px;
+            color: #333333;
+        }
+        a{
+            text-decoration: none;
+        }
+        .btn:hover{
+            background: #31b0d5;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <img src="img/1.jpg" alt="pic" id="img"/>
+    <p>
+        <a href="javaScript:;" class="btn" data-control="prev">上一页</a>
+        <a href="javaScript:;" class="btn" data-control="next">下一页</a>
+    </p>
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/preload.js"></script>
+<script>
+    var imgs = [
+        'img/1.jpg', 'img/2.jpg', 'img/3.jpg', 'img/4.jpg', 'img/5.jpg', 'img/6.jpg',
+    ];
+    var len = imgs.length,
+            index = 0;
+
+    $.preload(imgs,{
+        order:'ordered'
+    });
+
+    $('.btn').on('click', function () {
+        if ('prev' === $(this).data('control')) { //上一张
+            index = Math.max(0, --index);
+        } else {  //下一张
+            index = Math.min(len - 1, ++index);
+        }
+        document.title = (index + 1) + '/' + len;
+        $('#img').attr('src', imgs[index]);
+    });
+
+</script>
+</body>
+</html>
